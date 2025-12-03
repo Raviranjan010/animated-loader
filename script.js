@@ -37,7 +37,7 @@ function animate() {
   loader.setAttribute('aria-valuenow', Math.floor(progress));
   updateDetails();
 
-  if (progress < 100) {
+  if (progress < 105) {
     setTimeout(() => requestAnimationFrame(animate), 20 + Math.random() * 30);
   } else {
     loader.classList.add('complete');
