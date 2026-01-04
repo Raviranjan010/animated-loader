@@ -1,78 +1,134 @@
+:root {
+    --bg-color: #05070a;
+    --accent: #00f2ff;
+    --accent-secondary: #7000ff;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border: rgba(255, 255, 255, 0.08);
+}
+
+* { margin: 0; padding: 0; box-box: border-box; }
+
+body {
+    background-color: var(--bg-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Inter', -apple-system, sans-serif;
+    overflow: hidden;
+}
+
+.loader-wrapper {
+    position: relative;
+    padding: 20px;
+}
+
+/* Outer Glow following the bar */
+.bar-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+    opacity: 0.15;
+    filter: blur(40px);
+    pointer-events: none;
+}
+
 .loader-container {
     width: 400px;
-    height: 80px;
-    background: linear-gradient(145deg, #1a1a1a, #222);
-    border-radius: 12px;
+    height: 70px;
+    background: var(--glass);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     padding: 0 25px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3),
-                inset 0 1px 1px rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.05);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .progress-bar {
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    background: linear-gradient(90deg, #00ff88, #00b8ff);
+    left: 0; top: 0; bottom: 0;
     width: 0%;
-    transition: width 0.1s ease-out;
-    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    background: linear-gradient(90deg, var(--accent-secondary), var(--accent));
+    transition: width 0.4s cubic-bezier(0.1, 0.5, 0.5, 1);
+    z-index: 1;
 }
 
-.progress-text {
+/* Moving shimmer effect on the bar */
+.shimmer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmerMove 2s infinite linear;
+}
+
+.content-layer {
     position: relative;
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
     z-index: 2;
-    text-shadow: 0 0 10px rgba(0, 255, 136, 0.7);
-}
-
-.progress-details {
-    position: absolute;
-    right: 25px;
-    color: rgba(255,255,255,0.7);
-    font-size: 0.9rem;
-    font-weight: 300;
-}
-
-.progress-complete {
-    position: absolute;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    height: 100%;
+    align-items: center;
+    mix-blend-mode: difference; /* Makes text readable against both black and blue bar */
+}
+
+.percentage {
+    color: white;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.status-msg {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Success State */
+.success-layer {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    color: #000;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: blue;
+    gap: 15px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 4;
+}
+
+.loader-wrapper.finished .success-layer {
+    transform: translateY(0);
+}
+
+.check-icon {
     font-size: 1.5rem;
-    font-weight: 700;
-    opacity: 0.5;
-    transform: scale(0.8);
-    transition: all 0.5s ease;
-    z-index: 3;
+    animation: pulse 2s infinite;
 }
 
-.complete .progress-complete {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.complete .progress-bar,
-.complete .progress-text,
-.complete .progress-details {
-    opacity: 0;
-    transition: opacity 0.3s ease;
+@keyframes shimmerMove {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
 }
 
 @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(0, 255, 136, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
 }
