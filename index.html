@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Animated Loader by Ravi</title>
-    <!-- Favicon: simple circle -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><circle cx='5' cy='5' r='5' fill='%2300ff88'/></svg>" />
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Flux Loader</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="page-wrapper">
-        <!-- Loader container -->
-        <div class="loader-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-            <div class="progress-bar"></div>
-            <div class="progress-text">0%</div>
-            <div class="progress-details">Preparing magic dust…</div>
-            <div class="progress-complete" aria-hidden="true">
-                Complete! <span class="checkmark">✓</span>
+
+    <div class="canvas">
+        <div class="loader-wrapper" id="loaderWrapper">
+            <div class="bar-glow"></div>
+            
+            <div class="loader-container" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" id="progressBar">
+                    <div class="shimmer"></div>
+                </div>
+                
+                <div class="content-layer">
+                    <span class="percentage" id="percentText">0%</span>
+                    <span class="status-msg" id="statusMsg">Initializing Systems...</span>
+                </div>
+
+                <div class="success-layer" id="successLayer">
+                    <div class="check-icon">✦</div>
+                    <span>SYSTEM READY</span>
+                </div>
             </div>
         </div>
-    </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
